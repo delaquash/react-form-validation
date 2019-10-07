@@ -9,7 +9,7 @@ class App extends React.Component  {
           <h1>Create Account</h1>
             <form onSubmit={this.handleSubmit} noValidate>
               <div className="firstName">
-                <label htmlFor="firstName">First Name</label>
+                <label htmlFor="firstName">First Name </label>
                   <input 
                   type="text" 
                   className="" 
