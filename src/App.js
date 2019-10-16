@@ -67,8 +67,8 @@ class App extends React.Component  {
         break;
       case "email":
         formErrors.firstName =
-          value.length < 2 && value.length > 0 ?
-            "minimum 3 characters required" : "";
+          emailRegex.test(value) < 2 && value.length > 0 ?
+            "" : "Invalid email entered, Please entered correct email address";
         break;
       case "password":
         formErrors.firstName =
