@@ -1,8 +1,87 @@
 import React from 'react';
 import './App.css';
 
+const emailRegex = RegExp(
+  /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+);
+
+const formValid = formErrors => {
+  let valid = true;
+
+  Object.values(formErrors).forEach(val => {
+    val.length > 0 && (valid = false);
+  });
+  return valid;
+
+}
+
 
 class App extends React.Component  {
+  constructor(props) {
+    super(props);
+    this.state = {
+      firstName: null,
+      lastName: null,
+      email: null,
+      password: null,
+      formErrors : {
+        firstName: "",
+        lastName:"",
+        email:"",
+        password: ""
+      }
+    };
+  }
+
+  handleSubmit = e => {
+    e.preventDefault();
+    if (formValid(this.state.formErrors)) {
+      console.log (`
+       --SUBMITTING --
+       First Name: ${this.state.firstName}
+       Last Name: ${this.state.lastName}
+       Email: ${this.state.email}
+       Password: ${this.state.password}
+        `)
+    } else {
+      console.error ('FORM VALID - DISPLAY ERROR MESSAGES')
+    }
+  };
+
+  handleChange = e => {
+    e.preventDefault();
+    const { name, value } = e.target;
+    let formErrors = this.state.formErrors;
+ 
+
+    switch(name) {
+      case "firstName":
+        formErrors.firstName = 
+        value.length < 2 && value.length > 0 ? 
+        "minimum 3 characters required" : ""; 
+        break;
+      case "lastName":
+        formErrors.firstName =
+          value.length < 2 && value.length > 0 ?
+            "minimum 3 characters required" : "";
+        break;
+      case "email":
+        formErrors.firstName =
+          value.length < 2 && value.length > 0 ?
+            "minimum 3 characters required" : "";
+        break;
+      case "password":
+        formErrors.firstName =
+          value.length < 6 && value.length > 0 ?
+            "minimum 6 characters required" : "";
+        break;
+        default:
+        break;
+
+    }
+  }
+
+
   render(){
     return (
       <div className="wrapper">
@@ -16,7 +95,7 @@ class App extends React.Component  {
                   className="" 
                   placeholder="First Name"
                   name="firstName"
-                  onChange={this.onChange}
+                  onChange={this.handleChange}
                   noValidate />
               </div>
             <div className="lastName">
@@ -26,7 +105,7 @@ class App extends React.Component  {
                 className=""
                 placeholder="Last Name"
                 name="lastName"
-                onChange={this.onChange}
+                onChange={this.handleChange}
                 noValidate />
             </div>
             <div className="email">
@@ -36,7 +115,7 @@ class App extends React.Component  {
                 className=""
                 placeholder="Email Address"
                 name="email"
-                onChange={this.onChange}
+                onChange={this.handleChange}
                 noValidate />
             </div>
             <div className="password">
@@ -46,8 +125,12 @@ class App extends React.Component  {
                 className=""
                 placeholder="Enter Password"
                 name="password"
-                onChange={this.onChange}
+                onChange={this.handleChange}
                 noValidate />
+            </div>
+            <div className="createAccount">
+            <button className="submit">Create Account</button>
+            <small>Already have an account? </small>
             </div>
             </form>
         </div>
