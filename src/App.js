@@ -57,32 +57,35 @@ class App extends React.Component  {
     switch(name) {
       case "firstName":
         formErrors.firstName = 
-        value.length < 2 && value.length > 0 ? 
+        value.length < 3 ? 
         "minimum 3 characters required" : ""; 
         break;
       case "lastName":
-        formErrors.firstName =
-          value.length < 2 && value.length > 0 ?
-            "minimum 3 characters required" : "";
+        formErrors.lastName =
+          value.length < 3 ? "minimum 3 characters required" : "";
         break;
       case "email":
-        formErrors.firstName =
-          emailRegex.test(value) < 2 && value.length > 0 ?
+        formErrors.email =
+          emailRegex.test(value) < 3 ?
             "" : "Invalid email entered, Please entered correct email address";
         break;
       case "password":
-        formErrors.firstName =
-          value.length < 6 && value.length > 0 ?
-            "minimum 6 characters required" : "";
+        formErrors.password =
+          value.length < 6 ? "minimum 6 characters required" : "";
         break;
         default:
         break;
 
     }
+
+this.setState ({ formErrors, [name]: value }, () => console.log (this.state))
+
   }
 
 
   render(){
+    const { formErrors } = this.state;
+    
     return (
       <div className="wrapper">
         <div className="form-wrapper">
@@ -97,6 +100,11 @@ class App extends React.Component  {
                   name="firstName"
                   onChange={this.handleChange}
                   noValidate />
+                  {formErrors.firstName.length > 0 && (
+                    <span className="errorMessage">
+                      {formErrors.firstName}
+                    </span>
+                  )}
               </div>
             <div className="lastName">
               <label htmlFor="lastName">Last Name</label>
@@ -107,6 +115,11 @@ class App extends React.Component  {
                 name="lastName"
                 onChange={this.handleChange}
                 noValidate />
+              {formErrors.lastName.length > 0 && (
+                <span className="errorMessage">
+                  {formErrors.lastName}
+                </span>
+              )}
             </div>
             <div className="email">
               <label htmlFor="email">Enter Email</label>
@@ -117,6 +130,11 @@ class App extends React.Component  {
                 name="email"
                 onChange={this.handleChange}
                 noValidate />
+              {formErrors.email.length > 0 && (
+                <span className="errorMessage">
+                  {formErrors.email}
+                </span>
+              )}
             </div>
             <div className="password">
               <label htmlFor="password">Enter Password</label>
@@ -127,6 +145,11 @@ class App extends React.Component  {
                 name="password"
                 onChange={this.handleChange}
                 noValidate />
+              {formErrors.password.length > 0 && (
+                <span className="errorMessage">
+                  {formErrors.password}
+                </span>
+              )}
             </div>
             <div className="createAccount">
             <button className="submit">Create Account</button>
